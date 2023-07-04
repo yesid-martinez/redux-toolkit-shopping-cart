@@ -1,8 +1,12 @@
+import NavBar from "./components/navbar/NavBar";
+
+import './styles/style.scss';
+
 function App() {
 
   return (
-    <h1>Store</h1>
+    <NavBar/>
   )
 }
 
-export default App
+export default App;

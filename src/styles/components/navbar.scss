@@ -1,0 +1,16 @@
+@use '../variables.scss' as v;
+@use 'cart-icon.scss' as ci;
+
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: v.$header-bg-color;
+
+    h1{
+        color: v.$header-color;
+    }
+
+    @include ci.cart-icon();
+}
