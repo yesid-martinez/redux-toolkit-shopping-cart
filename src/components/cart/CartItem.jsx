@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FaChevronUp, FaChevronDown } from "react-icons/fa";
 
 import { useDispatch } from 'react-redux';
-import { removeItem } from '../../features/cart/cartSlice';
+import { removeItem, incrementItemAmount, decreaseItemAmount } from '../../features/cart/cartSlice';
 
 const CartItem = ({id, title,price, img, amount}) => {
     
@@ -22,11 +22,21 @@ const CartItem = ({id, title,price, img, amount}) => {
                 </button>
             </div>
             <div>
-                <button className="amount-btn">
+                <button
+                    className="amount-btn"
+                    onClick={() => dispatch(incrementItemAmount(id))}>
                     <FaChevronUp/>
                 </button>
                 <p className="amount">{amount}</p>
-                <button className="amount-btn">
+                <button
+                    className="amount-btn"
+                    onClick={ () => {
+                        if(amount === 1){
+                            dispatch(removeItem(id));
+                        }else{
+                            dispatch(decreaseItemAmount(id));
+                        }
+                    }}>
                     <FaChevronDown/>
                 </button>
             </div>

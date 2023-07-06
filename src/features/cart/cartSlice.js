@@ -24,10 +24,33 @@ const cartSlice = createSlice({
             // Filtra los articulos y quita el que coincida con el id
             state.cartItems = state.cartItems.filter((item) => item.id !== itemId);
         },
+        incrementItemAmount: (state, action) => {
+            
+            const itemId = action.payload;
+
+            // Busca el articulo en el carrito
+            const item = state.cartItems.find((item) => item.id === itemId);
+
+            // Incrementa el valor del articulo
+            item.amount += 1;
+        
+        },
+        decreaseItemAmount: (state, action) => {
+            
+            const itemId = action.payload;
+
+            // Busca el articulo en el carrito
+            const item = state.cartItems.find((item) => item.id === itemId);
+
+            // Decreme el valor del articulo
+            item.amount -= 1;
+        
+        
+        },
     },
 });
 
 
 // Exportar el reducer
 export default cartSlice.reducer;
-export const { clearCart, removeItem } = cartSlice.actions;
+export const { clearCart, removeItem, incrementItemAmount, decreaseItemAmount } = cartSlice.actions;
