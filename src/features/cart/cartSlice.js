@@ -44,8 +44,20 @@ const cartSlice = createSlice({
 
             // Decreme el valor del articulo
             item.amount -= 1;
-        
-        
+        },
+        calculateTotals: (state) => {
+            let totalAmount = 0;
+            let totalPrice = 0;
+            
+            // Recorre los items del cart
+            state.cartItems.forEach((item) => {
+                totalAmount += item.amount;
+                totalPrice += item.amount * item.price;
+            });
+
+            // Modifica el estado
+            state.amount = totalAmount;
+            state.total = totalPrice;
         },
     },
 });
@@ -53,4 +65,4 @@ const cartSlice = createSlice({
 
 // Exportar el reducer
 export default cartSlice.reducer;
-export const { clearCart, removeItem, incrementItemAmount, decreaseItemAmount } = cartSlice.actions;
+export const { clearCart, removeItem, incrementItemAmount, decreaseItemAmount, calculateTotals } = cartSlice.actions;
