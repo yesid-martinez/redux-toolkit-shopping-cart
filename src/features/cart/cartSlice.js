@@ -17,12 +17,12 @@ const url = "http://localhost:3000/items"
 export const getCartItems = createAsyncThunk(
     // Recibe 2 parámetros: Nombre del action - Función que realiza el llamado
     "cart/getCartItems",
-    async () => {
+    async (_, thunkAPI) => {
         try {
             const response = await axios.get(url);
             return response.data;
         } catch (error) {
-            return [];
+            return thunkAPI.rejectWithValue("Something went wrong!");
         }
     }
 );
@@ -97,6 +97,8 @@ const cartSlice = createSlice({
             .addCase(getCartItems.rejected, (state) => {
                 // Indica que la información ya no está cargando
                 state.isLoading = false;
+                state.cartItems = [];
+                console.warn("Hubo un error al cargar los datos");
             })
         
     }
