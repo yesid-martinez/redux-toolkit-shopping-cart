@@ -14,6 +14,7 @@ function App() {
 
   // Obtiene acceso a los items del cart
   const { cartItems } = useSelector((store) => store.cart);
+  const { isOpen } = useSelector((store) => store.modal);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -23,7 +24,7 @@ function App() {
 
   return (
     <>
-      <Modal/>
+      {isOpen && <Modal/>}
       <NavBar/>
       <CartContainer/>
       <CartFooter/>
