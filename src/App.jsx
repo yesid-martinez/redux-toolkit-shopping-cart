@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import NavBar from "./components/navbar/NavBar";
 import CartContainer from "./components/cart/CartContainer";
 import CartFooter from "./components/cart/CartFooter";
+import Modal from './components/Modal';
 
 import './styles/style.scss';
 import { calculateTotals } from "./features/cart/cartSlice";
@@ -22,6 +23,7 @@ function App() {
 
   return (
     <>
+      <Modal/>
       <NavBar/>
       <CartContainer/>
       <CartFooter/>

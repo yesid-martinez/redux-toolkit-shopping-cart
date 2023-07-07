@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+// Slice: Permite crear un estado de forma independiente
 
 import cartItems from "../../data/cartItems";
 
