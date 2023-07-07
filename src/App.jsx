@@ -8,19 +8,29 @@ import CartFooter from "./components/cart/CartFooter";
 import Modal from './components/Modal';
 
 import './styles/style.scss';
-import { calculateTotals } from "./features/cart/cartSlice";
+
+import { calculateTotals, getCartItems } from "./features/cart/cartSlice";
 
 function App() {
 
   // Obtiene acceso a los items del cart
-  const { cartItems } = useSelector((store) => store.cart);
+  const { cartItems, isLoading } = useSelector((store) => store.cart);
   const { isOpen } = useSelector((store) => store.modal);
   const dispatch = useDispatch();
+
+  // Obtiene los items del backend
+  useEffect(() => {
+    dispatch(getCartItems());
+  }, [dispatch]);
 
   useEffect(() => {
     // Recalcula los totales al cambiar cartItems
     dispatch(calculateTotals());
-  }, [cartItems, dispatch])
+  }, [cartItems, dispatch]);
+
+  if(isLoading) {
+    return <h1>Loading...</h1>;
+  }
 
   return (
     <>

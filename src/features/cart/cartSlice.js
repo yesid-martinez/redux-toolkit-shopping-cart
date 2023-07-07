@@ -1,14 +1,31 @@
-import { createSlice } from "@reduxjs/toolkit";
-// Slice: Permite crear un estado de forma independiente
+import axios from "axios";
 
-import cartItems from "../../data/cartItems";
+// createSlice: Permite crear una función que crea un estado de forma independiente
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+// createAsyncThunk: Permite crear una función que hace un llamado asincrono al backend
 
 // Estado inicial
 const initialState = {
-    cartItems,
+    cartItems: [],
     amount: 0,
     total: 0,
+    isLoading: false,
 };
+
+const url = "http://localhost:3000/items"
+
+export const getCartItems = createAsyncThunk(
+    // Recibe 2 parámetros: Nombre del action - Función que realiza el llamado
+    "cart/getCartItems",
+    async () => {
+        try {
+            const response = await axios.get(url);
+            return response.data;
+        } catch (error) {
+            return [];
+        }
+    }
+);
 
 // Creación del slice
 const cartSlice = createSlice({
@@ -61,6 +78,28 @@ const cartSlice = createSlice({
             state.total = totalPrice;
         },
     },
+
+    // extraReducers: Permite extender el reducer raíz del slice actual para manejar acciones
+    // de otros slices o acciones globales de la aplicación
+    extraReducers: (builder) => {
+    // `builder` permite agregar casos de reducer adicionales
+        builder
+            .addCase(getCartItems.pending, (state) => {
+                // Indica que la información está cargando
+                state.isLoading = true;
+            })
+            .addCase(getCartItems.fulfilled, (state, action) => {
+                // Indica que la información ya no está cargando
+                state.isLoading = false;
+                // Obtiene los datos del backend
+                state.cartItems = action.payload;
+            })
+            .addCase(getCartItems.rejected, (state) => {
+                // Indica que la información ya no está cargando
+                state.isLoading = false;
+            })
+        
+    }
 });
 
 
