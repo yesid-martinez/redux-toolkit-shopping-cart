@@ -6,6 +6,7 @@ import NavBar from "./components/navbar/NavBar";
 import CartContainer from "./components/cart/CartContainer";
 import CartFooter from "./components/cart/CartFooter";
 import Modal from './components/Modal';
+import Loading from "./components/Loading";
 
 import './styles/style.scss';
 
@@ -28,9 +29,7 @@ function App() {
     dispatch(calculateTotals());
   }, [cartItems, dispatch]);
 
-  if(isLoading) {
-    return <h1>Loading...</h1>;
-  }
+  if(isLoading) return <Loading/>
 
   return (
     <>
@@ -39,7 +38,6 @@ function App() {
       <CartContainer/>
       <CartFooter/>
     </>
-
   )
 }
 
